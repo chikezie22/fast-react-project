@@ -1,6 +1,11 @@
+:root {
+  --loader-text-color: #c3590c;
+  --loader-dot-color: #a51ff6;
+  /* --loader-bg: #100319; */
+}
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: #f7f7f7;
   color: #444;
 }
@@ -34,5 +39,70 @@ body {
   }
   80% {
     background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+.loader-container {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-color: var(--loader-bg);
+  display: grid;
+  place-content: center;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+/* Air */
+
+@font-face {
+  font-family: "DarlingFont";
+  src: url("./assets/font/Little-days.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+svg {
+  width: 20rem;
+  font-weight: 400;
+}
+
+svg text {
+  font-size: 6rem;
+  /* font-family: "Little-days", cursive; */
+  font-family: "DarlingFont", cursive;
+  stroke-width: 2;
+  letter-spacing: -2px;
+}
+
+svg text.text-body {
+  /* fill: #a51ff6; */
+  /* font-family: "Little-days", sans-serif; */
+  /* font-family: "DarlingFont", cursive; */
+  stroke: var(--loader-text-color);
+  animation: 3s infinite alternate animate-stroke;
+}
+
+@keyframes animate-stroke {
+  0% {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: var(--loader-text-color);
+    stroke-dashoffset: 25%;
+    stroke-dasharray: 0 32%;
+  }
+
+  50% {
+    fill: transparent;
+    stroke-width: 1;
+    stroke: var(--loader-text-color);
+  }
+
+  80%,
+  100% {
+    fill: var(--loader-text-color);
+    stroke: transparent;
+    stroke-width: 0;
+    stroke-dashoffset: -25%;
+    stroke-dasharray: 32% 5%;
   }
 }
