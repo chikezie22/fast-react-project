@@ -14,7 +14,7 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 32px;
-  height: 100dvh;
+  height: 95dvh;
 }
 
 /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
@@ -47,6 +47,7 @@ body {
   inset: 0;
   z-index: 999;
   background-color: var(--loader-bg);
+  backdrop-filter: blur(10px);
   display: grid;
   place-content: center;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;

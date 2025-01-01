@@ -7,14 +7,14 @@ function AppLayout() {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
   return (
-    <div>
+    <div className="layout">
       {isLoading && <Loader />}
       {/* <Loader /> */}
       <Header />
       <main>
         <Outlet />
-        <CartOverview />
       </main>
+      <CartOverview />
     </div>
   );
 }
