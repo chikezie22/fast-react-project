@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { useState } from "react";
 
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -71,6 +72,10 @@ function CreateOrder() {
         </div>
 
         <div>
+          <input type="text" hidden value={JSON.stringify(cart)} readOnly name="cart" />
+        </div>
+
+        <div>
           <button>Order now</button>
         </div>
       </Form>
@@ -81,7 +86,14 @@ function CreateOrder() {
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
+  // console.log(data);
+  const order = {
+    ...data,
+    priority: data.priority === "on",
+    cart: JSON.parse(data.cart),
+  };
+  const newOrder = await createOrder(order);
+  return redirect(`/order/${newOrder.id}`);
 };
 
 export default CreateOrder;
