@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 // import { useState } from "react";
 
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
@@ -34,6 +34,11 @@ const fakeCart = [
 
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
+  const navigation = useNavigation();
+  const actionData = useActionData();
+  console.log(actionData);
+  const isSubmitting = navigation.state === "submitting";
+  console.log(navigation.state);
   const cart = fakeCart;
 
   return (
@@ -51,6 +56,7 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          <div>{actionData.phone}</div>
         </div>
 
         <div>
@@ -76,7 +82,9 @@ function CreateOrder() {
         </div>
 
         <div>
-          <button>Order now</button>
+          <button disabled={isSubmitting}>
+            {isSubmitting ? "Placing Your Order...." : "Order now"}{" "}
+          </button>
         </div>
       </Form>
     </div>
@@ -92,6 +100,10 @@ export const action = async ({ request }) => {
     priority: data.priority === "on",
     cart: JSON.parse(data.cart),
   };
+  const errors = {};
+  if (!isValidPhone(order.phone)) errors.phone = "Please input a Valid Phone Number";
+  if (Object.keys(errors).length > 0) return errors;
+
   const newOrder = await createOrder(order);
   return redirect(`/order/${newOrder.id}`);
 };
