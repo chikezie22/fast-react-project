@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --loader-text-color: #c3590c;
   --loader-dot-color: #a51ff6;
