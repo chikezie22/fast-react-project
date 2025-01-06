@@ -16,6 +16,7 @@ function Menu() {
 }
 
 export const loader = async () => {
+  await new Promise((res) => setTimeout(res, 1000));
   const data = await getMenu();
   return data;
 };
