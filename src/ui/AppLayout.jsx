@@ -12,6 +12,7 @@ function AppLayout() {
     <div className="grid grid-rows-[auto_1fr_auto] h-dvh">
       {isLoading && <Loader />}
       <div>this is the loading test</div>
+      <h1>Loading</h1>
       {/* {true && <Loader />} */}
       {/* <Loader /> */}
       <Header />
