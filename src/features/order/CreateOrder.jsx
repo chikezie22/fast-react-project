@@ -57,9 +57,11 @@ function CreateOrder() {
           <div>
             <input className="input" type="tel" name="phone" required />
           </div>
-          <div className="sm:col-start-2 mt-2">
-            <p className="text-xs text-red-700 bg-red-100 p-2 rounded-md">{actionData?.phone}</p>
-          </div>
+          {actionData?.phone && (
+            <div className="sm:col-start-2 mt-2">
+              <p className="text-xs text-red-700 bg-red-100 p-2 rounded-md">{actionData?.phone}</p>
+            </div>
+          )}
         </div>
 
         <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
