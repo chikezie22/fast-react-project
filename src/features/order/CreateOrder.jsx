@@ -43,31 +43,33 @@ function CreateOrder() {
   const cart = fakeCart;
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="px-4 py-6">
+      <h2 className="text-xl font-semibold mb-8">Ready to order? Let's go!</h2>
 
       <Form method="post">
-        <div>
+        <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
           <label>First Name</label>
           <input className="input " type="text" name="customer" required />
         </div>
 
-        <div>
+        <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
           <label>Phone number</label>
           <div>
             <input className="input" type="tel" name="phone" required />
           </div>
-          <div>{actionData?.phone}</div>
+          <div className="sm:col-start-2 mt-2">
+            <p className="text-xs text-red-700 bg-red-100 p-2 rounded-md">{actionData?.phone}</p>
+          </div>
         </div>
 
-        <div>
+        <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
           <label>Address</label>
           <div>
             <input type="text" name="address" required className="input" />
           </div>
         </div>
 
-        <div>
+        <div className="mb-12 flex items-center gap-5">
           <input
             className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring  focus:ring-yellow-400 "
             type="checkbox"
