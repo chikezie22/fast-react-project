@@ -7,7 +7,7 @@ function Menu() {
   // useLoaderData from route to handle data fetching logic without using a useEffect
   const menu = useLoaderData();
   return (
-    <ul>
+    <ul className="divide-y divide-stone-200 px-2">
       {menu.map((pizza) => (
         <MenuItem pizza={pizza} key={pizza.id} />
       ))}
