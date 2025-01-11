@@ -4,6 +4,7 @@
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -37,9 +38,12 @@ function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const navigation = useNavigation();
   const actionData = useActionData();
-  console.log(actionData);
   const isSubmitting = navigation.state === "submitting";
-  console.log(navigation.state);
+  // instead of using useSelector i used local storage to get state of username from browser
+  // const userName = useSelector((state)=>state.user.userName)
+ const userName = JSON.parse(localStorage.getItem('userName'));
+ console.log(userName)
+  
   const cart = fakeCart;
 
   return (
@@ -49,7 +53,7 @@ function CreateOrder() {
       <Form method="post">
         <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
           <label>First Name</label>
-          <input className="input " type="text" name="customer" required />
+          <input className="input " type="text" name="customer" required defaultValue={userName} />
         </div>
 
         <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">

@@ -32,6 +32,7 @@ const userSlice = createSlice({
   reducers:{
     updateName(state,action){
       state.userName = action.payload;
+      localStorage.setItem('userName', JSON.stringify(action.payload))
     }
   }
 })
