@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { formatCurrency } from '../../utils/helpers'
 
 function OrderItem({ item, isLoadingIngredients, ingredients }) {
