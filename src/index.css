@@ -3,104 +3,121 @@
 @tailwind utilities;
 
 :root {
-  --loader-text-color: #c3590c;
-  --loader-dot-color: #a51ff6;
-  /* --loader-bg: #100319; */
+    --loader-text-color: #c3590c;
+    --loader-dot-color: #a51ff6;
+    /* --loader-bg: #100319; */
 }
 
 @layer components {
-  .input {
-    @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-400 w-full md:px-6 md:py-3;
-  }
+    .input {
+        @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-400 w-full md:px-6 md:py-3;
+    }
 }
 
 /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
 .loader {
-  width: 45px;
-  aspect-ratio: 0.75;
-  --c: no-repeat linear-gradient(#333 0 0);
-  background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
-  background-size: 20% 50%;
-  animation: loading 1s infinite linear;
+    width: 45px;
+    aspect-ratio: 0.75;
+    --c: no-repeat linear-gradient(#333 0 0);
+    background:
+        var(--c) 0% 50%,
+        var(--c) 50% 50%,
+        var(--c) 100% 50%;
+    background-size: 20% 50%;
+    animation: loading 1s infinite linear;
 }
 
 @keyframes loading {
-  20% {
-    background-position: 0% 0%, 50% 50%, 100% 50%;
-  }
-  40% {
-    background-position: 0% 100%, 50% 0%, 100% 50%;
-  }
-  60% {
-    background-position: 0% 50%, 50% 100%, 100% 0%;
-  }
-  80% {
-    background-position: 0% 50%, 50% 50%, 100% 100%;
-  }
+    20% {
+        background-position:
+            0% 0%,
+            50% 50%,
+            100% 50%;
+    }
+    40% {
+        background-position:
+            0% 100%,
+            50% 0%,
+            100% 50%;
+    }
+    60% {
+        background-position:
+            0% 50%,
+            50% 100%,
+            100% 0%;
+    }
+    80% {
+        background-position:
+            0% 50%,
+            50% 50%,
+            100% 100%;
+    }
 }
 
 .loader-container {
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background-color: var(--loader-bg);
-  backdrop-filter: blur(10px);
-  display: grid;
-  place-content: center;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    position: absolute;
+    inset: 0;
+    z-index: 999;
+    background-color: var(--loader-bg);
+    backdrop-filter: blur(10px);
+    display: grid;
+    place-content: center;
+    transition:
+        opacity 0.4s ease-in-out,
+        visibility 0.4s ease-in-out;
 }
 
 /* Air */
 
 @font-face {
-  font-family: "DarlingFont";
-  src: url("./assets/font/Little-days.ttf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'DarlingFont';
+    src: url('./assets/font/Little-days.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 svg {
-  width: 20rem;
-  font-weight: 400;
+    width: 20rem;
+    font-weight: 400;
 }
 
 svg text {
-  font-size: 6rem;
-  /* font-family: "Little-days", cursive; */
-  font-family: "DarlingFont", cursive;
-  stroke-width: 2;
-  letter-spacing: -2px;
+    font-size: 6rem;
+    /* font-family: "Little-days", cursive; */
+    font-family: 'DarlingFont', cursive;
+    stroke-width: 2;
+    letter-spacing: -2px;
 }
 
 svg text.text-body {
-  /* fill: #a51ff6; */
-  /* font-family: "Little-days", sans-serif; */
-  /* font-family: "DarlingFont", cursive; */
-  stroke: var(--loader-text-color);
-  animation: 3s infinite alternate animate-stroke;
+    /* fill: #a51ff6; */
+    /* font-family: "Little-days", sans-serif; */
+    /* font-family: "DarlingFont", cursive; */
+    stroke: var(--loader-text-color);
+    animation: animate-stroke 3s infinite alternate;
 }
 
 @keyframes animate-stroke {
-  0% {
-    fill: transparent;
-    stroke-width: 1;
-    stroke: var(--loader-text-color);
-    stroke-dashoffset: 25%;
-    stroke-dasharray: 0 32%;
-  }
+    0% {
+        fill: transparent;
+        stroke-width: 1;
+        stroke: var(--loader-text-color);
+        stroke-dashoffset: 25%;
+        stroke-dasharray: 0 32%;
+    }
 
-  50% {
-    fill: transparent;
-    stroke-width: 1;
-    stroke: var(--loader-text-color);
-  }
+    50% {
+        fill: transparent;
+        stroke-width: 1;
+        stroke: var(--loader-text-color);
+    }
 
-  80%,
-  100% {
-    fill: var(--loader-text-color);
-    stroke: transparent;
-    stroke-width: 0;
-    stroke-dashoffset: -25%;
-    stroke-dasharray: 32% 5%;
-  }
+    80%,
+    100% {
+        fill: var(--loader-text-color);
+        stroke: transparent;
+        stroke-width: 0;
+        stroke-dashoffset: -25%;
+        stroke-dasharray: 32% 5%;
+    }
 }

@@ -8,7 +8,7 @@ import CreateOrder from './features/order/CreateOrder'
 import Order from './features/order/Order'
 import Cart from './features/cart/Cart'
 import AppLayout from './ui/AppLayout'
-// import Error from "./ui/Error";
+import Error from './ui/Error'
 
 // const router = createBrowserRouter([
 //   {
@@ -42,9 +42,15 @@ import AppLayout from './ui/AppLayout'
 const router = createBrowserRouter([
     {
         element: <AppLayout />,
+        errorElement: <Error />,
         children: [
             { element: <Home />, path: '/' },
-            { element: <Menu />, path: '/menu', loader: menuLoader },
+            {
+                element: <Menu />,
+                path: '/menu',
+                loader: menuLoader,
+                errorElement: <Error />,
+            },
             { element: <Cart />, path: '/cart' },
             { element: <CreateOrder />, path: '/order/new' },
             { element: <Order />, path: '/order/:orderId' },

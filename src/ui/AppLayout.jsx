@@ -7,6 +7,7 @@ import { getCart } from '../features/cart/cartSlice'
 
 function AppLayout() {
     const navigation = useNavigation()
+    console.log(navigation)
     const cart = useSelector(getCart)
     const isLoading = navigation.state === 'loading'
 
@@ -14,7 +15,6 @@ function AppLayout() {
         <div className="grid grid-rows-[auto_1fr_auto] h-dvh">
             {isLoading && <Loader />}
             {/* {true && <Loader />} */}
-            {/* <Loader /> */}
             <Header />
             <div className="overflow-scroll overflow-x-hidden">
                 <main className="mx-auto max-w-3xl">
