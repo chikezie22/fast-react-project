@@ -3,11 +3,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import Home from './ui/Home'
-import Menu from './features/menu/Menu'
+import Menu, { loader as menuLoader } from './features/menu/Menu'
 import CreateOrder from './features/order/CreateOrder'
 import Order from './features/order/Order'
 import Cart from './features/cart/Cart'
-// import AppLayout from "./ui/AppLayout";
+import AppLayout from './ui/AppLayout'
 // import Error from "./ui/Error";
 
 // const router = createBrowserRouter([
@@ -40,11 +40,16 @@ import Cart from './features/cart/Cart'
 
 // ******************************************************** i am going to write the code from afresh
 const router = createBrowserRouter([
-    { element: <Home />, path: '/' },
-    { element: <Menu />, path: '/menu' },
-    { element: <Cart />, path: '/cart' },
-    { element: <CreateOrder />, path: '/order/new' },
-    { element: <Order />, path: '/order/:orderId' },
+    {
+        element: <AppLayout />,
+        children: [
+            { element: <Home />, path: '/' },
+            { element: <Menu />, path: '/menu', loader: menuLoader },
+            { element: <Cart />, path: '/cart' },
+            { element: <CreateOrder />, path: '/order/new' },
+            { element: <Order />, path: '/order/:orderId' },
+        ],
+    },
 ])
 
 const App = () => {
