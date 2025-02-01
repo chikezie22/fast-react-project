@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { totalPrice, totalQuantity } from './cartSlice'
+import { getTotalPrice, getTotalQuantity } from './cartSlice'
 import { formatCurrency } from '../../utils/helpers'
 
 function CartOverview() {
-    const totalPizzaPrice = useSelector(totalPrice)
-    const totalPizzaQuantity = useSelector(totalQuantity)
+    const totalPizzaPrice = useSelector(getTotalPrice)
+    const totalPizzaQuantity = useSelector(getTotalQuantity)
 
     return (
         <div className="bg-stone-800 text-stone-300 uppercase p-4 sm:p-6 flex justify-between items-center">

@@ -15,6 +15,7 @@ const cartSlice = createSlice({
             state.cart = state.cart.filter((item) => item.id !== action.payload)
         },
         increaseItemQuantity(state, action) {
+            //  we are also passing id of the item
             const item = state.cart.find((item) => item.id === action.payload)
             item.quantity++
             item.totalPrice = item.quantity * item.unitPrice
@@ -42,10 +43,13 @@ export default cartSlice.reducer
 
 export const getCart = (state) => state.cart.cart
 
-export const totalPrice = (state) =>
+export const getTotalPrice = (state) =>
     state.cart.cart.reduce((acc, item) => {
         return acc + item.totalPrice
     }, 0)
 
-export const totalQuantity = (state) =>
+export const getTotalQuantity = (state) =>
     state.cart.cart.reduce((acc, item) => acc + item.quantity, 0)
+
+export const getCurrentQuantity = (id) => (state) =>
+    state.cart.cart.find((item) => item.id === id)?.quantity ?? 0
