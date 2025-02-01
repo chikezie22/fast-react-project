@@ -1,41 +1,45 @@
-import { useState } from "react";
-import Button from "../../ui/Button";
-import { useDispatch} from "react-redux";
-import { updateName } from "./userSlice";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react'
+import Button from '../../ui/Button'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateName } from './userSlice'
+import { useNavigate } from 'react-router-dom'
 function CreateUser() {
-  const [username, setUsername] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+    const [username, setUsername] = useState('')
+    const dispatch = useDispatch()
+    console.log(dispatch)
+    const navigate = useNavigate()
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if(!username) return
-    dispatch(updateName(username));
-    navigate('/menu')
-  }
+    function handleSubmit(e) {
+        e.preventDefault()
+        if (!username) return
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <p className="mb-4 text-sm text-stone-600 md:text-base">
-        👋 Welcome! Please start by telling us your name:
-      </p>
+        dispatch(updateName(username))
 
-      <input
-        className="w-72 input mb-8"
-        type="text"
-        placeholder="Your full name"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+        console.log(username)
+        navigate('/menu')
+    }
 
-      {username !== "" && (
-        <div>
-          <Button type="primary">Start ordering</Button>
-        </div>
-      )}
-    </form>
-  );
+    return (
+        <form onSubmit={handleSubmit}>
+            <p className="mb-4 text-sm text-stone-600 md:text-base">
+                👋 Welcome! Please start by telling us your name:
+            </p>
+
+            <input
+                className="w-72 input mb-8"
+                type="text"
+                placeholder="Your full name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+
+            {username !== '' && (
+                <div>
+                    <Button type="primary">Start ordering</Button>
+                </div>
+            )}
+        </form>
+    )
 }
 
-export default CreateUser;
+export default CreateUser

@@ -39,6 +39,7 @@ const fakeCart = [
 function CreateOrder() {
     // const [withPriority, setWithPriority] = useState(false);
     const navigation = useNavigation()
+    // actionData use to get data in the component that the action was made a good way to return and show errors to that page
     const actionData = useActionData()
     const isSubmitting = navigation.state === 'submitting'
     // instead of using useSelector i used local storage to get state of username from browser
@@ -140,8 +141,12 @@ export const action = async ({ request }) => {
         priority: data.priority === 'on',
         cart: JSON.parse(data.cart),
     }
+    const errors = {}
+    if (!isValidPhone(order.phone))
+        errors.phone =
+            'This Phone number is not valid kindly input a valid phone number to be used to contact you'
+    if (Object.keys(errors).length > 0) return errors
     const newOrder = await createOrder(order)
-    console.log(newOrder)
     return redirect(`/order/${newOrder.id}`)
 }
 

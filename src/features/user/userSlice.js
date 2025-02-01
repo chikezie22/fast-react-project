@@ -5,8 +5,6 @@
 //   });
 // }
 
-
-
 // async function fetchAddress() {
 //   // 1) We get the user's geolocation position
 //   const positionObj = await getPosition();
@@ -23,19 +21,19 @@
 //   return { position, address };
 // }
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { userName:'' };
+const initialState = { userName: '' }
 const userSlice = createSlice({
-  name:'user',
-  initialState,
-  reducers:{
-    updateName(state,action){
-      state.userName = action.payload;
-      localStorage.setItem('userName', JSON.stringify(action.payload))
-    }
-  }
+    name: 'user',
+    initialState,
+    reducers: {
+        updateName(state, action) {
+            state.userName = action.payload
+            // localStorage.setItem('userName', JSON.stringify(action.payload))
+        },
+    },
 })
 
-export const { updateName } = userSlice.actions;
-export default userSlice.reducer;
+export const { updateName } = userSlice.actions
+export default userSlice.reducer
