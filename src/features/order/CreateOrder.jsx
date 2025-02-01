@@ -115,9 +115,9 @@ function CreateOrder() {
                     <input
                         type="text"
                         hidden
-                        value={JSON.stringify(cart)}
                         readOnly
                         name="cart"
+                        value={JSON.stringify(cart)}
                     />
                 </div>
 
@@ -134,18 +134,14 @@ function CreateOrder() {
 export const action = async ({ request }) => {
     const formData = await request.formData()
     const data = Object.fromEntries(formData)
-    // console.log(data);
+
     const order = {
         ...data,
         priority: data.priority === 'on',
         cart: JSON.parse(data.cart),
     }
-    const errors = {}
-    if (!isValidPhone(order.phone))
-        errors.phone = 'Please input a Valid Phone Number'
-    if (Object.keys(errors).length > 0) return errors
-
     const newOrder = await createOrder(order)
+    console.log(newOrder)
     return redirect(`/order/${newOrder.id}`)
 }
 
