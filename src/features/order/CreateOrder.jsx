@@ -4,12 +4,13 @@
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../services/apiRestaurant'
 import Button from '../../ui/Button'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clearCart, getCart, getTotalPrice } from '../cart/cartSlice'
 import { useState } from 'react'
 import store from '../../store'
 import { formatCurrency } from '../../utils/helpers'
 import EmptyCart from '../cart/EmptyCart'
+import { fetchUserData } from '../user/userSlice'
 // import { useSelector } from "react-redux";
 
 // https://uibakery.io/regex-library/phone-number
@@ -45,16 +46,16 @@ const isValidPhone = (str) =>
 function CreateOrder() {
     const [withPriority, setWithPriority] = useState(false)
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     // actionData use to get data in the component that the action was made a good way to return and show errors to that page
     const actionData = useActionData()
     const isSubmitting = navigation.state === 'submitting'
     // instead of using useSelector i used local storage to get state of username from browser
     // const userName = useSelector((state)=>state.user.userName)
     const userName = JSON.parse(localStorage.getItem('userName'))
-    console.log(userName)
 
     const cart = useSelector(getCart)
-    console.log(cart)
+
     const totalPrice = useSelector(getTotalPrice)
     const prioityPrice = totalPrice * 0.2 + totalPrice
     const finalPrice = withPriority ? prioityPrice : totalPrice
@@ -66,6 +67,10 @@ function CreateOrder() {
             <h2 className="text-xl font-semibold mb-8">
                 Ready to order? Let's go!
             </h2>
+
+            <button onClick={() => dispatch(fetchUserData())}>
+                fetch address
+            </button>
 
             <Form method="post">
                 <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">

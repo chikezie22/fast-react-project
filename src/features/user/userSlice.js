@@ -1,9 +1,60 @@
-// import { getAddress } from "../../services/apiGeocoding";
-// function getPosition() {
-//   return new Promise(function (resolve, reject) {
-//     navigator.geolocation.getCurrentPosition(resolve, reject);
-//   });
-// }
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { getAddress } from '../../services/apiGeocoding'
+function getPosition() {
+    return new Promise(function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+}
+
+// fetchUserData is now an action
+export const fetchUserData = createAsyncThunk('user/fetchData', async () => {
+    const positionObj = await getPosition()
+    const position = {
+        latitude: positionObj.coords.latitude,
+        longitude: positionObj.coords.longitude,
+    }
+    const addressObj = await getAddress(position)
+    const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`
+    // this is actually the payload for the fulfilled state
+    return { position, address }
+})
+
+const initialState = {
+    userName: '',
+    status: 'idle',
+    position: {},
+    address: '',
+    error: '',
+}
+const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        updateName(state, action) {
+            state.userName = action.payload
+            // localStorage.setItem('userName', JSON.stringify(action.payload))
+        },
+    },
+    // this is the technique used for async operations in redux
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchUserData.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchUserData.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.position = action.payload.position
+                state.address = action.payload.address
+            })
+            .addCase(fetchUserData.rejected, (state, action) => {
+                state.status = 'error'
+                state.error = action.error.message
+            })
+    },
+})
+
+export const { updateName } = userSlice.actions
+export default userSlice.reducer
 
 // async function fetchAddress() {
 //   // 1) We get the user's geolocation position
@@ -20,20 +71,3 @@
 //   // 3) Then we return an object with the data that we are interested in
 //   return { position, address };
 // }
-
-import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = { userName: '' }
-const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        updateName(state, action) {
-            state.userName = action.payload
-            // localStorage.setItem('userName', JSON.stringify(action.payload))
-        },
-    },
-})
-
-export const { updateName } = userSlice.actions
-export default userSlice.reducer
