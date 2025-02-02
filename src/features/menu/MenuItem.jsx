@@ -10,7 +10,7 @@ function MenuItem({ pizza }) {
     const dispatch = useDispatch()
     const handleSubmit = () => {
         const newItem = {
-            id,
+            pizzaId: id,
             name,
             quantity: 1,
             unitPrice,
