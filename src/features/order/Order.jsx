@@ -2,17 +2,28 @@
 // Test ID: IIDSAT
 
 import OrderItem from './OrderItem'
-import { useLoaderData } from 'react-router-dom'
+import { useFetcher, useLoaderData } from 'react-router-dom'
 import { getOrder } from '../../services/apiRestaurant'
 import {
     calcMinutesLeft,
     formatCurrency,
     formatDate,
 } from '../../utils/helpers'
+import { useEffect } from 'react'
+import UpdateOrder from './UpdateOrder'
 
 function Order() {
     // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
     const order = useLoaderData()
+    // console.log(order.cart)
+    const fetcher = useFetcher()
+
+    useEffect(() => {
+        if (!fetcher.data && fetcher.state === 'idle') {
+            fetcher.load('/menu')
+        }
+    }, [fetcher])
+    // console.log(fetcher.data)
 
     const {
         id,
@@ -55,7 +66,15 @@ function Order() {
 
             <ul className="divide-y divide-stone-200 border-b border-t">
                 {cart.map((item) => (
-                    <OrderItem key={item.pizzaId} item={item} />
+                    <OrderItem
+                        key={item.pizzaId}
+                        item={item}
+                        isLoadingIngredients={fetcher.state === 'loading'}
+                        ingredients={
+                            fetcher?.data?.find((el) => el.id === item.pizzaId)
+                                ?.ingredients ?? []
+                        }
+                    />
                 ))}
             </ul>
 
@@ -73,14 +92,15 @@ function Order() {
                     {formatCurrency(orderPrice + priorityPrice)}
                 </p>
             </div>
+            {!priority && <UpdateOrder />}
         </div>
     )
 }
-
+// I4QP32
 // params object by default  is used to get paramsId similar to useParams in older router but currently in routerV6 and upward it comes by default
 
-export const loader = ({ params }) => {
-    const order = getOrder(params.orderId)
+export const loader = async ({ params }) => {
+    const order = await getOrder(params.orderId)
     return order
 }
 

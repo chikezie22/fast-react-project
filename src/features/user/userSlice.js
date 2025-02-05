@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getAddress } from '../../services/apiGeocoding'
+
 function getPosition() {
     return new Promise(function (resolve, reject) {
         navigator.geolocation.getCurrentPosition(resolve, reject)
@@ -71,3 +72,48 @@ export default userSlice.reducer
 //   // 3) Then we return an object with the data that we are interested in
 //   return { position, address };
 // }
+
+// export const fetchUserData = createAsyncThunk('user/fetchData', async()=>{
+//     const response = await fetch('/api/cart');
+//     const data = response.json()
+//     return data
+// })
+
+// const initialState = {isLoggedIn:false, cart:[], status:idle, error:''}
+// const cartSlice = createSlice({
+//     name:'cart',
+//     initialState,
+//     reducers:{
+//         addItem(state,action){
+//             state.cart.push(action.payload)
+//         },
+
+//         deleteItem(state,action){
+//             state.cart.filter((item)=> item.id !== action.payload)
+//         }
+
+//         applyDiscount(state,action){
+//          const item =   state.cart.find((item)=> item.id === action.payload)
+
+//          if(item.discount){
+//             item.totalPrice = (item.unitPrice * item.quantity) - (item.unitPrice * item.quantity * .2)
+//          }
+//         }
+//     },
+
+//     extraReducers: (builder)=>{
+//         builder.addCase(fetchUserData.pending,(state)=>{
+//             state.status = 'loading'
+//         }).addCase(fetchUserData.fulfilled, (state,action)=>{
+//             state.status = 'idle'
+//             state.cart.push(action.payload.data)
+//         }).addCase(fetchUserData.rejected, (state,action)=>{
+//             state.status = 'error'
+//             state.error = action.error.message
+//         })
+//     }
+
+// })
+
+// export {addItem, deleteItem, applyDiscount} = cartSlice.actions
+// export default cartSlice.reducer

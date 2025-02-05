@@ -11,6 +11,7 @@ import Order, { loader as orderLoader } from './features/order/Order'
 import Cart from './features/cart/Cart'
 import AppLayout from './ui/AppLayout'
 import Error from './ui/Error'
+import { action as updateOrderAction } from './features/order/UpdateOrder'
 
 // const router = createBrowserRouter([
 //   {
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
             {
                 element: <Order />,
                 path: '/order/:orderId',
+                action: updateOrderAction,
                 loader: orderLoader,
                 errorElement: <Error />,
             },

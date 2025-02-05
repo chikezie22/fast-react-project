@@ -7,6 +7,7 @@ import UpdateItem from '../cart/UpdateItem'
 
 function MenuItem({ pizza }) {
     const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza
+    console.log(pizza)
     const dispatch = useDispatch()
     const handleSubmit = () => {
         const newItem = {
@@ -19,6 +20,8 @@ function MenuItem({ pizza }) {
         dispatch(addItem(newItem))
     }
     const currentQuantity = useSelector(getCurrentQuantity(id))
+    console.log(currentQuantity)
+
     const isInCart = currentQuantity > 0
     return (
         <li className="flex gap-4 py-2">

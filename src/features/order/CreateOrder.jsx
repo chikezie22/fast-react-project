@@ -52,9 +52,19 @@ function CreateOrder() {
     const isSubmitting = navigation.state === 'submitting'
     // instead of using useSelector i used local storage to get state of username from browser
     // const userName = useSelector((state)=>state.user.userName)
-    const userName = JSON.parse(localStorage.getItem('userName'))
+    // const userName = JSON.parse(localStorage.getItem('userName'))
 
     const cart = useSelector(getCart)
+    // get userData async thunk
+
+    const {
+        userName,
+        status: addressStatus,
+        position,
+        address,
+        error: errorAddress,
+    } = useSelector((state) => state.user)
+    const isLoadingAddress = addressStatus === 'loading'
 
     const totalPrice = useSelector(getTotalPrice)
     const prioityPrice = totalPrice * 0.2 + totalPrice
@@ -67,10 +77,6 @@ function CreateOrder() {
             <h2 className="text-xl font-semibold mb-8">
                 Ready to order? Let's go!
             </h2>
-
-            <button onClick={() => dispatch(fetchUserData())}>
-                fetch address
-            </button>
 
             <Form method="post">
                 <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
@@ -103,7 +109,7 @@ function CreateOrder() {
                     )}
                 </div>
 
-                <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center">
+                <div className="mb-5 grid sm:grid-cols-[10rem_1fr] sm:items-center relative">
                     <label>Address</label>
                     <div>
                         <input
@@ -111,8 +117,28 @@ function CreateOrder() {
                             name="address"
                             required
                             className="input"
+                            defaultValue={address}
                         />
+                        {addressStatus === 'error' && (
+                            <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
+                                {errorAddress}
+                            </p>
+                        )}
                     </div>
+                    {!position.latitude && !position.longitude && (
+                        <span className="absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px]">
+                            <Button
+                                disabled={isLoadingAddress}
+                                type="small"
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    dispatch(fetchUserData())
+                                }}
+                            >
+                                Get position
+                            </Button>
+                        </span>
+                    )}
                 </div>
 
                 <div className="mb-12 flex items-center gap-5">
@@ -160,6 +186,7 @@ export const action = async ({ request }) => {
         priority: data.priority === 'true',
         cart: JSON.parse(data.cart),
     }
+    console.log(order)
     const errors = {}
     if (!isValidPhone(order.phone))
         errors.phone =
